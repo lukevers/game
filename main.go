@@ -5,6 +5,8 @@ import (
 	"github.com/lukevers/game/initialize"
 	"github.com/lukevers/go-gl/glfw/v3.1/glfw"
 	"github.com/lukevers/go-gl/text"
+	"github.com/lukevers/go-gl/gl"
+	"strconv"
 )
 
 // Logger
@@ -36,7 +38,12 @@ func main() {
 
 func loop() {
 	for !window.ShouldClose() {
-		// TODO
+		gl.Clear(gl.COLOR_BUFFER_BIT)
+
+
+		// draw time for test
+		drawDebug()
+
 
 		// Poll for events
 		glfw.PollEvents()
@@ -44,4 +51,10 @@ func loop() {
 		// Swap Buffers
 		window.SwapBuffers()
 	}
+}
+
+func drawDebug() {
+	time := strconv.FormatFloat(glfw.GetTime(), 'f', 0, 64) + " seconds"
+	gl.Color4f(255, 255, 255, 1)
+	fonts["AnonymiceBold"].Printf(5, 5, time)
 }

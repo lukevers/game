@@ -6,16 +6,19 @@ import (
 	"os"
 )
 
-func Fonts() (allfonts map[string]*text.Font) {
+func Fonts() map[string]*text.Font {
+	allfonts := make(map[string]*text.Font)
 	// Loop over each font that we have and load it
-	for name, file := range fonts.Fonts {
-		font, err := loadFont(file, 14)
-		if err == nil {
-			allfonts[name] = font
+	for name, group := range fonts.Fonts {
+		for weight, path := range group {
+			font, err := loadFont(path, 14)
+			if err == nil {
+				allfonts[name+weight] = font
+			}
 		}
 	}
 
-	return
+	return allfonts
 }
 
 func loadFont(path string, scale int32) (*text.Font, error) {
